@@ -1,0 +1,8 @@
+-- CREATE TABLE Student2(std_id INTEGER GENERATED ALWAYS AS IDENTITY
+--                     ,name VARCHAR(20)
+--                     ,class INTEGER
+--                     ,createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+--                     ,createdBy varchar(10) default 'Admin');
+--
+-- drop table student;
+--

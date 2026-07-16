@@ -1,0 +1,7 @@
+-- INSERT INTO Student2(name, class)
+-- VALUES
+--     ('Aarav Sharma', 10),
+--     ('Diya Patel', 12),
+--     ('Vivaan Gupta', 9),
+--     ('Sanya Verma', 11),
+--     ('Kabir Sharma', 10);
