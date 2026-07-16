@@ -34,27 +34,27 @@ This repository follows a **step-by-step learning approach**, where each commit 
 
 ## ✅ Part 1 — JUnit Basics
 
-- @Test
-- Assertions
-- assertEquals()
-- assertTrue()
-- assertFalse()
-- assertAll()
-- assertThrows()
-- assertDoesNotThrow()
-- @DisplayName
+- @Test✔️
+- Assertions✔️
+- assertEquals()✔️
+- assertTrue()✔️
+- assertFalse()✔️
+- assertAll()✔️
+- assertThrows()✔️
+- assertDoesNotThrow()✔️
+- @DisplayName✔️
 
 ---
 
 ## 🚀 Part 2 — Advanced JUnit
 
-- @BeforeEach
-- @AfterEach
-- @BeforeAll
-- @AfterAll
-- @ParameterizedTest
-- @CsvSource
-- @ValueSource
+- @BeforeEach✔️
+- @AfterEach✔️
+- @BeforeAll✔️
+- @AfterAll✔️
+- @ParameterizedTest✔️
+- @CsvSource✔️
+- @ValueSource✔️
 
 ---
 
