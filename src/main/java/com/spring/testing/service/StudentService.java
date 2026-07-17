@@ -79,4 +79,13 @@ public class StudentService {
         return age >= 21 && marks >= 60;
     }
 
+    public List<Student> findStudentByNameAndAge(String name, int age) {
+        return repository.findByNameAndAge(name, age)
+                .orElseThrow(
+                        () -> new StudentNotFoundException("Student not found with nameOrAge : " + name +" "+ age)
+                )
+                ;
+    }
+
+
 }
