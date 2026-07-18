@@ -86,9 +86,9 @@ This repository follows a **step-by-step learning approach**, where each commit 
 
 ## 🚀 Part 5 — Repository Testing
 
-- @DataJpaTest
-- H2 Database
-- Custom Repository Methods
+- @DataJpaTest✔️
+- H2 Database✔️
+- Custom Repository Methods✔️
 
 ---
 
