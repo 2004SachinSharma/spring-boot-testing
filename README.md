@@ -146,3 +146,326 @@ This repository is created to:
 Please consider giving it a **Star ⭐**.
 
 It motivates me to keep improving this project and adding more testing examples.
+
+---
+
+## The Biggest Doubt
+
+**Q.** If we mock the Service/Repository response, then the real logic isn't running. So what are we actually testing?
+
+**A.** We are **not testing the whole application**. We are testing **only one class (unit)** at a time.
+
+The goal is to verify:
+
+- Does it behave correctly for valid input?
+- Does it handle missing data correctly?
+- Does it throw the expected exception?
+- Does every `if`, `else`, and validation work correctly?
+
+---
+
+# What is Mocking?
+
+A **mock** is a fake object that replaces a real dependency.
+
+Example:
+
+```java
+@Mock
+private UserRepository repository;
+```
+
+This is **not** the real repository.
+
+---
+
+# What is Stubbing?
+
+Stubbing means telling a mock what to return.
+
+```java
+when(repository.findById(1L))
+        .thenReturn(Optional.of(user));
+```
+
+Meaning:
+
+> "If `findById(1L)` is called, return `Optional.of(user)`."
+
+The repository code **does not execute**.
+
+---
+
+# Why Mock?
+
+Suppose the Service has three possible cases:
+
+### Case 1
+
+Repository returns a User.
+
+Expected:
+
+```text
+Return UserResponse
+```
+
+### Case 2
+
+Repository returns empty.
+
+Expected:
+
+```text
+Throw UserNotFoundException
+```
+
+### Case 3
+
+Repository returns an inactive User.
+
+Expected:
+
+```text
+Throw UserInactiveException
+```
+
+Without mocking, creating these situations using a real database is slow and difficult.
+
+With mocking, we simply control what the repository returns and verify whether the Service behaves correctly.
+
+---
+
+# What Actually Runs?
+
+## Controller Test
+
+Real:
+
+```
+Controller
+```
+
+Mock:
+
+```
+Service
+```
+
+Question:
+
+> If the Service returns this response, does the Controller return the correct HTTP response?
+
+---
+
+## Service Test
+
+Real:
+
+```
+Service
+```
+
+Mock:
+
+```
+Repository
+```
+
+Question:
+
+> If the Repository returns this data, does the Service apply the business logic correctly?
+
+The **Service logic runs**.
+
+Only the Repository is fake.
+
+---
+
+## Repository Test
+
+Real:
+
+```
+Repository
+```
+
+Real:
+
+```
+Database (H2/Test DB)
+```
+
+Question:
+
+> Is my database query working correctly?
+
+No mocking is used here.
+
+---
+
+# Why does `thenReturn()` use the Repository's return type?
+
+Example:
+
+```java
+Optional<User> findById(Long id);
+```
+
+Then
+
+```java
+when(repository.findById(1L))
+        .thenReturn(Optional.of(user));
+```
+
+must return
+
+```java
+Optional<User>
+```
+
+because that's what the repository method returns.
+
+But
+
+```java
+UserResponse response = service.getUser(1L);
+```
+
+uses `UserResponse` because that's the **Service's return type**.
+
+---
+
+# Standard Unit Test Pattern
+
+## 1. Arrange
+
+Create input and stub dependencies.
+
+```java
+Request request = new Request(...);
+
+when(repository.findById(...))
+        .thenReturn(...);
+```
+
+---
+
+## 2. Act
+
+Call the method being tested.
+
+```java
+Response response = service.process(request);
+```
+
+---
+
+## 3. Assert
+
+Verify the expected result.
+
+```java
+assertEquals(...);
+```
+
+or
+
+```java
+assertThrows(...);
+```
+
+or
+
+```java
+verify(repository).findById(...);
+```
+
+---
+
+# Which Layer is Mocked?
+
+| Testing | Real | Mock |
+|---------|------|------|
+| Controller Test | Controller | Service |
+| Service Test | Service | Repository |
+| Repository Test | Repository | Nothing |
+
+---
+
+# Golden Rule
+
+> **Mock the layer below the one you're testing.**
+
+- Testing Controller → Mock Service
+- Testing Service → Mock Repository
+- Testing Repository → Use a Test Database
+
+---
+
+# Final Takeaway
+
+A Unit Test is **not** proving that the whole application works.
+
+It is proving that **one class behaves correctly for every possible scenario** by controlling the responses of its dependencies.
+
+# Let's understand the (AAA) more clearly:
+
+## 1. Arrange (Prepare)
+
+In this step, we prepare everything required for the test.
+
+- Create the input that will be passed to the method.
+- Create the objects that the mocked dependency should return.
+- Stub the dependency using `when(...).thenReturn(...)`.
+
+Example:
+
+```java
+UserRequest request = new UserRequest(1L);
+
+User user = new User(1L, "John");
+
+when(repository.findById(1L))
+        .thenReturn(Optional.of(user));
+```
+
+**Think of it as:**
+
+> "I have prepared the input and I have already decided what response the mocked dependency should return."
+
+---
+
+## 2. Act
+
+Call the method being tested.
+
+```java
+UserResponse response = service.getUser(request);
+```
+
+This is where the **actual logic of the class under test executes**.
+
+---
+
+## 3. Assert
+
+Verify whether the result is what you expected.
+
+```java
+assertEquals("John", response.getName());
+```
+
+or
+
+```java
+assertThrows(UserNotFoundException.class,
+        () -> service.getUser(request));
+```
+
+or
+
+```java
+verify(repository).findById(1L);
+```
