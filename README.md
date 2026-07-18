@@ -60,27 +60,27 @@ This repository follows a **step-by-step learning approach**, where each commit 
 
 ## 🚀 Part 3 — Mockito
 
-- @Mock
-- @InjectMocks
-- @ExtendWith(MockitoExtension.class)
-- when()
-- thenReturn()
-- verify()
-- times()
-- never()
-- any()
-- eq()
-- Exception Testing
+- @Mock✔️
+- @InjectMocks✔️
+- @ExtendWith(MockitoExtension.class)✔️
+- when()✔️
+- thenReturn()✔️
+- verify()✔️
+- times()✔️
+- never()✔️
+- any()✔️
+- eq()✔️
+- Exception Testing✔️
 
 ---
 
 ## 🚀 Part 4 — Controller Testing
 
-- @WebMvcTest
-- MockMvc
-- @MockBean
-- jsonPath()
-- Response Assertions
+- @WebMvcTest✔️
+- MockMvc✔️
+- @MockBean✔️
+- jsonPath()✔️
+- Response Assertions✔️
 
 ---
 
