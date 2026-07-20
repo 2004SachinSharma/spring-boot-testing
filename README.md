@@ -103,14 +103,14 @@ This repository follows a **step-by-step learning approach**, where each commit 
 
 ## 🚀 Part 7 — Advanced Testing
 
-- ArgumentCaptor
-- @Spy
+- ArgumentCaptor✔️
+- @Spy⏳
 - doReturn()⏳
 - doThrow()⏳
 - doNothing()⏳
 - verifyNoInteractions()⏳
 - verifyNoMoreInteractions()⏳
-- JaCoCo Code Coverage
+- JaCoCo Code Coverage✔️
   
 ---
 
