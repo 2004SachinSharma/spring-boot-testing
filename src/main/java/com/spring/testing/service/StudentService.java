@@ -31,6 +31,12 @@ public class StudentService {
                         new StudentNotFoundException("Student not found with id : " + id));
     }
 
+    public Student getStudent(String name) {
+        return repository.findByName(name)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student not found with name : " + name));
+    }
+
     public List<Student> getAllStudents() {
         return repository.findAll();
     }
