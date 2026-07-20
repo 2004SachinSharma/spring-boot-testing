@@ -94,10 +94,10 @@ This repository follows a **step-by-step learning approach**, where each commit 
 
 ## 🚀 Part 6 — Integration Testing
 
-- @SpringBootTest
-- @AutoConfigureMockMvc
-- Real Database Testing
-- End-to-End Flow
+- @SpringBootTest✔️
+- @AutoConfigureMockMvc✔️
+- Real Database Testing✔️
+- End-to-End Flow✔️
 
 ---
 
