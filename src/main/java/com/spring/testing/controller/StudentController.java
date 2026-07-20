@@ -27,9 +27,9 @@ public class StudentController {
         return ResponseEntity.ok(service.getStudent(id));
     }
 
-    @GetMapping
+    @GetMapping(params = "name")
     public ResponseEntity<Student> getStudent(@RequestParam String name) {
-        return ResponseEntity.ok(service.getStudent(name));
+        return ResponseEntity.status(HttpStatus.OK).body(service.getStudent(name));
     }
 
     @GetMapping
