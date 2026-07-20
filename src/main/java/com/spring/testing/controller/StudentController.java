@@ -28,6 +28,11 @@ public class StudentController {
     }
 
     @GetMapping
+    public ResponseEntity<Student> getStudent(@RequestParam String name) {
+        return ResponseEntity.ok(service.getStudent(name));
+    }
+
+    @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         return ResponseEntity.ok(service.getAllStudents());
     }
