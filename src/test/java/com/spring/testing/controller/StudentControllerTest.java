@@ -5,11 +5,18 @@ import com.spring.testing.dto.StudentRequest;
 import com.spring.testing.service.StudentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -197,3 +204,57 @@ class StudentControllerTest {
      * ⚡ Punchy Quick-Reference List@WebMvcTest: Configures only web layer components.MockMvc: Simulates HTTP requests without server overhead.@MockBean: Replaces real Spring beans with Mockito mocks.jsonPath(): Evaluates JSON expression matches against response body.Response Assertions: Verifies global properties like status, headers, and type.*/
 
 }
+
+//The below is the "controller unit test", while the one above is "Controller Web Slice Test", read README.md docs about this in the section "Testing types"
+
+@ExtendWith(MockitoExtension.class)
+class StudentControllerTest2 {
+
+    @Mock
+    private StudentService service;
+
+    @InjectMocks
+    private StudentController controller;
+
+    @Test
+    @DisplayName("Create Student Successfully")
+    void testCreateStudentSuccess() {
+
+        // ============================
+        // Arrange
+        // ============================
+
+        StudentRequest request = new StudentRequest();
+        request.setName("Sachin");
+        request.setAge(21);
+        request.setMarks(90);
+
+        Student response = Student.builder()
+                .id(1L)
+                .name("Sachin ji")
+                .age(21)
+                .marks(90)
+                .build();
+
+        when(service.saveStudent(any(StudentRequest.class)))
+                .thenReturn(response);
+
+        // ============================
+        // Act
+        // ============================
+
+        ResponseEntity<Student> responseEntity =
+                controller.createStudent(request);
+
+        // ============================
+        // Assert
+        // ============================
+
+        assertEquals("Sachin ji", responseEntity.getBody().getName());
+
+        verify(service, times(1))
+                .saveStudent(any(StudentRequest.class));
+    }
+}
+
+
